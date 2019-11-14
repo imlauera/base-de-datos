@@ -1,0 +1,127 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[spanish,activeacute]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{tgheros}
+\usepackage{color}
+\usepackage{tcolorbox}
+\usepackage{enumerate}
+\usepackage[margin=0.5in]{geometry}
+\begin{document}
+\begin{titlepage}
+	\centering
+	\includegraphics[width=2.5cm]{unr.png}\par\vspace{1cm}
+	{\scshape \fontsize{8}{4} \selectfont {FACULTAD DE CIENCIAS EXACTAS, INGENIERÍA Y AGRIMENSURA} \par}
+	\vspace{1cm}
+	{\scshape\Large Teoría Base de Datos\par}
+	\vspace{1.5cm}
+	{\large \bfseries TRABAJO PRÁCTICO - NORMALIZACIÓN\par}
+	\vspace{4cm}
+	\large \fontsize{12}{5} \selectfont Imlauer, Andrés  \par Molina, Facundo
+\end{titlepage}
+\noindent
+\subsection{Ejecutando el programa}
+\noindent
+\small {\fontfamily{qcr}\selectfont {\$ chmod +x tp4.py }} \\
+\small {\fontfamily{qcr}\selectfont {\$ ./tp4.py r\_data f\_data} [args] }
+\subsubsection{Argumentos posicionales} 
+\begin{itemize}
+  \item
+    {\textit{r\_data}}: Archivo en donde se encuentra el esquema de relaciones.
+  \item
+    {\textit{f\_data}}: Archivo donde se encuentra el conjunto de dependencias funcionales.
+\end{itemize}
+\subsubsection{Argumentos opcionales} 
+\begin{itemize}
+  \item
+    {\framebox{-f}} Este argumento es usado para hacer el calculo de F+.
+  \item
+    {\framebox{-a}} Dado un A, realiza el cálculo de A+.
+  \item
+    {\framebox{-ca}} Dada una relación R y un conjunto de dependencias funcionales F, calcula las 
+    claves candidatas.
+  \item
+    {\framebox{-h}} Muestra un menú de ayuda.
+\end{itemize}
+\subsubsection{Formato de entrada}
+\noindent
+Se toman los datos desde dos archivos R y F. \\ \\
+\noindent
+\textbf{\small{Conjunto de dependencias funcionales (F).}} \\ \\
+$\begin{array}{lcr}
+    A \rightarrow B \\
+    CB \rightarrow A \\ 
+    B \rightarrow AD  
+\end{array}$ está representado por un archivo que contiene:
+$ 
+\begin{array}{lcr}
+    A -> B \\
+    C,B -> A \\ 
+    B -> A,D 
+\end{array} $ \\ \\ \\
+Donde cada dependencia funcional está separado por un salto de linea. \\ \\ \\
+\noindent
+\textbf{\small{Conjunto de relaciones (R).}} \\ 
+$
+\begin{array}{lcr}
+    \{ A,B,C,D \}
+\end{array}$ \quad está representado por
+$ \quad
+\begin{array}{lcr}
+    A\\
+    B\\ 
+    C\\
+    D 
+\end{array} $ 
+\subsubsection{Ejemplos de uso}
+\noindent
+{\fontfamily{qcr}\selectfont{\$ ./tp.py {\colorbox[rgb]{0.54, 0.81, 0.94}{Data/R Data/F -f -ca}}}} \\ \\
+{\fontfamily{qcr}\selectfont{\$ ./tp.py {\colorbox[rgb]{0.54, 0.81, 0.94}{Data/R Data/F -f}}}} \\ \\
+{\fontfamily{qcr}\selectfont{\$ ./tp.py {\colorbox[rgb]{0.54, 0.81, 0.94}{Data/R Data/F -a F,G }}}} \\ \\
+{\fontfamily{qcr}\selectfont{\$ ./tp.py {\colorbox[rgb]{0.54, 0.81, 0.94}{Data/R Data/F -f -a F,G -ca }}}} \\ \\
+\newpage
+\subsection{Pruebas}
+\subsubsection{Cálculo de $F^+$} 
+\begin{enumerate}[i.]
+  \item
+    Implementado en R.1 y F.1 \\
+    $R = \{A, B ,C, D \}$ \\
+    $F = \{ A \rightarrow B, \quad CB \rightarrow A, \quad B \rightarrow AD \}$ \\ \\
+    Cardinalidad de F+: 137 \\
+    Tiempo: 0m0.142s
+  \item
+    Implementado en R.2 y F.2 \\
+    $R = \{A, B, C, D, E, F\}$ \\
+    $F = \{ AB \rightarrow C, \quad BD \rightarrow EF \}$ \\ \\
+    Cardinalidad de F+: 1081 \\
+    Tiempo: 0m24.608s
+\end{enumerate} 
+\subsubsection{Cálculo de $\alpha^+$ y claves candidatas}
+\begin{enumerate}[i.]
+  \item
+    Implementado en los archivos R.3 y F.3 \\
+    $R = \{A, B ,C, D, E, F, G, H, I, J \}$ \\
+    $F = \{ AB \rightarrow C, \quad BD \rightarrow EF, \quad AD \rightarrow GH, A \rightarrow I, H \rightarrow J \}$ \\
+    A = \{B, D\} \\ \\
+    A+  : \{E, F, D, B \} \\
+    Tiempo: 0m0.056s
+  \item
+    Implementado en los archivos R.4 y F.4 \\
+    $R = \{A, B, C, D, E, F, G, H\}$ \\
+    $F = \{ A \rightarrow BC, \quad C \rightarrow D, D \rightarrow G, H \rightarrow E, E \rightarrow A, E \rightarrow H \}$ \\ 
+    A  = \{ A,C \} \\ \\
+    A+ : \{B, C, A, G, D \} \\
+    Tiempo: 0m0.050s
+  \item
+    Implementado en los archivos R.5 y F.5 \\
+    $R = \{A, B, C, D, E, F, G\}$ \\
+    $F = \{ A \rightarrow G, \quad A \rightarrow F, B \rightarrow E, C \rightarrow D, E \rightarrow A, D \rightarrow B, GF \rightarrow C \}$ \\
+    A  = \{ F,G \} \\ \\
+    A+ : \{ A, F, B, D, G, C, E \} \\
+    Tiempo: 0m0.050s
+\end{enumerate}
+\subsection{Algoritmo usado para el cálculo de las claves candidatas.}
+\noindent
+Empezamos calculando el conjunto de partes, antes de verificar que sea una clave candidata, comprobamos si es el subconjunto más chico de las superclaves anteriormente encontradas sino la descartamos, ahora verificamos si es una clave candidata (comprobando si llega a todo el conjunto de relaciones), si es la agregamos a \textit{resultado} si no seguimos probando con
+las demás.
+\end{document}

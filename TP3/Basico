@@ -1,0 +1,21 @@
+Entrar a mysql:
+mysql -h 'host' -u 'user' -p
+luego entrar la pass.
+
+Crear una  base de datos:
+CREATE DATABASE nombre_de_bd;
+CREATE DATABASE IF NO EXISTS nombre_de_bd;
+
+Seleccionar una base de datos:
+USE nomre_de_bd
+
+Mostrar todas las bases de datos:
+SHOW DATABASES;
+
+Mostrar todas las tablas de una base de datos:
+SHOW TABLES;
+
+Mostrar la info de la tabla:
+DESCRIBE nombre_de_la_tabla;
+
+mysql -u root -p < Consignas/Inmobiliaria.sql
